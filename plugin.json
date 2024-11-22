@@ -1,0 +1,15 @@
+{
+    "id": "communitytube",
+    "name": "CommunityTube",
+    "description": "Plugin allows community to share their videos in your website !",
+    "version": "1.0.0",
+    "url": "https://discord.gg/yFpkrwebnQ",
+    "authors": [
+        "Boulldogo"
+    ],
+    "azuriom_api": "1.1.0",
+    "providers": [
+        "\\Azuriom\\Plugin\\CommunityTube\\Providers\\CommunityTubeServiceProvider",
+        "\\Azuriom\\Plugin\\CommunityTube\\Providers\\RouteServiceProvider"
+    ]
+}
