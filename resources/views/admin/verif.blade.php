@@ -8,12 +8,7 @@
         <div class="card-body">
             <h1 class="text-center">{{ trans('communitytube::messages.admin.title.verif') }}</h1>
             <p class="text-center text-muted">{{ trans('communitytube::messages.admin.description.verif') }}</p>
-
-            @if(session('c_success'))
-                 <div class="alert alert-success text-center">
-                    ✅ {{ session('c_success') }} ✅
-                </div>
-            @endif
+            
             @php
                 $unverifiedVideos = $videos->filter(function($video) {
                     return !$video->verified;

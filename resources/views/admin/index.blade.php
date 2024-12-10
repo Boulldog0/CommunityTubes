@@ -6,18 +6,6 @@
 <div class="container my-4">
     <div class="card shadow-sm p-4">
         <div class="card-body">
-            @if(session('c_success'))
-                <div class="alert alert-success text-center">
-                    ✅ {{ session('c_success') }} ✅
-                </div>
-            @endif
-
-            @if(session('c_error'))
-                <div class="alert alert-warning text-center">
-                    ⚠️ {{ session('c_error') }} ⚠️
-                </div>
-            @endif
-
             <div class="mb-5">
                 <h3 class="mb-4">{{ trans('communitytube::messages.admin.title.videos') }}</h3>
                 
@@ -88,7 +76,7 @@
                                         </button>
                                     @endif
                                    <button class="btn btn-danger btn-sm me-2">
-                                       <i class="bi bi-heart"></i> {{ $video->likes }}
+                                       <i class="bi bi-heart"></i> {{ \Azuriom\Plugin\CommunityTube\Models\CommunityTubeLikes::where('video_id', $video->id)->count() }}
                                    </button>
                                    @if($video->pined)
                                        <button class="btn btn-warning btn-sm me-2" title="{{ trans('communitytube::messages.admin.pinned') }}">

@@ -4,18 +4,6 @@
 
 @section('content')
     <div class="mb-3">
-        @if(session('c_error'))
-            <div class="alert alert-warning text-center">
-                ⚠️ {{ session('c_error') }} ⚠️
-            </div>
-        @endif
-
-        @if(session('c_success'))
-            <div class="alert alert-success text-center">
-                ✅ {{ session('c_success') }} ✅
-            </div>
-        @endif
-
         <h1>{{ trans('communitytube::messages.title') }}</h1>
         <div class="row">
             @if($videos->isNotEmpty())
@@ -58,11 +46,11 @@
                                         @csrf
                                         @if($user && \Azuriom\Plugin\CommunityTube\Models\CommunityTubeLikes::hasLiked($user->id, $video->id))
                                             <button type="submit" class="btn btn-primary btn-sm">
-                                                <i class="bi bi-heart-fill"></i> {{ $video->likes }}
+                                                <i class="bi bi-heart-fill"></i> {{ \Azuriom\Plugin\CommunityTube\Models\CommunityTubeLikes::where('video_id', $video->id)->count() }}
                                             </button>
                                         @else
                                             <button type="submit" class="btn btn-outline-primary btn-sm">
-                                                <i class="bi bi-heart"></i> {{ $video->likes }}
+                                                <i class="bi bi-heart"></i> {{ \Azuriom\Plugin\CommunityTube\Models\CommunityTubeLikes::where('video_id', $video->id)->count() }}
                                             </button>
                                         @endif
                                     </form>

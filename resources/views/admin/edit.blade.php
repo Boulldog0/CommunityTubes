@@ -12,15 +12,6 @@
                 <div class="alert alert-warning text-center mt-3">
                     🕰️ {{ trans('communitytube::messages.admin.video_waiting') }} 🕰️
                 </div>
-            @else
-                <div class="alert alert-success text-center mt-3">
-                    ✅ {{ trans('communitytube::messages.admin.video_verified') }} ✅
-                </div>
-            @endif
-            @if(session('c_success'))
-                 <div class="alert alert-success text-center">
-                    ✅ {{ session('c_success') }} ✅
-                </div>
             @endif
             <div class="card mx-auto mb-4 shadow-sm" style="max-width: 600px;">
                 <div class="position-relative">

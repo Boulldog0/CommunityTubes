@@ -55,11 +55,11 @@
                         @csrf
                         @if($user && \Azuriom\Plugin\CommunityTube\Models\CommunityTubeLikes::hasLiked($user->id, $video->id))
                             <button type="submit" class="btn btn-primary btn-sm">
-                                <i class="bi bi-heart-fill"></i> {{ $video->likes }}
+                                <i class="bi bi-heart-fill"></i> {{ \Azuriom\Plugin\CommunityTube\Models\CommunityTubeLikes::where('video_id', $video->id)->count() }}
                             </button>
                         @else
                             <button type="submit" class="btn btn-outline-primary btn-sm">
-                                <i class="bi bi-heart"></i> {{ $video->likes }}
+                                <i class="bi bi-heart"></i> {{ \Azuriom\Plugin\CommunityTube\Models\CommunityTubeLikes::where('video_id', $video->id)->count() }}
                             </button>
                         @endif
                     </form>

@@ -4,6 +4,8 @@ return [
     'title' => 'Vidéos de la Communauté',
     'link-placeholder' => 'Uniquement des liens type https://www.youtube.com/ ou https://www.youtu.be/',
     'submitted_by' => 'Vidéo soumise par',
+    'invalid_link' => 'Lien invalide ! Seul des liens type https://www.youtube.com/ ou https://www.youtu.be/ peuvent être utilisés !',
+    'video_submitted_with_success' => 'Vidéo soumise avec succès !',
     'see_more' => 'Voir plus',
     'video_title' => 'Détails de la vidéo',
     'no_video' => 'Il n\'y a aucune vidéo disponible a montrer ici. Vous pouvez, si vous en avez la permission, soumettre une nouvelle vidéo.',

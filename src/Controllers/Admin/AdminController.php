@@ -22,14 +22,14 @@ class AdminController extends Controller
     
         if(!$user || !$user->can('communitytube.manage')) {
             return redirect()->route('communitytube.index')
-                             ->with('c_error', trans('communitytube::messages.no-permission'));
+                             ->with('error', trans('communitytube::messages.no-permission'));
         }
     
         $video = CommunityTube::find($id);
 
         if(!$video) {
             return redirect()->route('communitytube.index')
-                             ->with('c_error', trans('communitytube::messages.video_not_found'));
+                             ->with('error', trans('communitytube::messages.video_not_found'));
         }
 
         $video->update([
@@ -40,7 +40,7 @@ class AdminController extends Controller
         ]);    
     
         return redirect()->route('communitytube.admin.edit', ['id' => $id])
-                         ->with('c_success', trans('communitytube::messages.admin.video_validated'));
+                         ->with('success', trans('communitytube::messages.admin.video_validated'));
     }
 
     public function delete(Request $request, $id) 
@@ -49,20 +49,20 @@ class AdminController extends Controller
     
         if(!$user || !$user->can('communitytube.manage')) {
             return redirect()->route('communitytube.index')
-                             ->with('c_error', trans('communitytube::messages.no-permission'));
+                             ->with('error', trans('communitytube::messages.no-permission'));
         }
 
         $video = CommunityTube::where('id', $id);
     
         if(!$video) {
             return redirect()->route('communitytube.index')
-                             ->with('c_error', trans('communitytube::messages.video_not_found'));
+                             ->with('error', trans('communitytube::messages.video_not_found'));
         }
     
        $video->delete();
 
         return redirect()->route('communitytube.admin.index')
-                         ->with('c_success', trans('communitytube::messages.admin.video_deleted_c_successfully'));
+                         ->with('success', trans('communitytube::messages.admin.video_deleted_successfully'));
     } 
 
     public function verif() 
@@ -89,7 +89,7 @@ class AdminController extends Controller
     
         if(!$user || !$user->can('communitytube.manage')) {
             return redirect()->route('communitytube.index')
-                             ->with('c_error', trans('communitytube::messages.no-permission'));
+                             ->with('error', trans('communitytube::messages.no-permission'));
         }
     
         $title = $request->input('title');
@@ -112,6 +112,6 @@ class AdminController extends Controller
         ]);
     
         return redirect()->route('communitytube.admin.index')
-                         ->with('c_success', trans('communitytube::messages.admin.video_edited_c_successfully'));
+                         ->with('success', trans('communitytube::messages.admin.video_edited_successfully'));
     }    
 }

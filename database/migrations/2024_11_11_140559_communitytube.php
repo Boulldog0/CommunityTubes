@@ -8,35 +8,38 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('communitytube_videos', function(Blueprint $table) {
+        Schema::create('communitytube_videos', function (Blueprint $table) {
             $table->id();
             $table->string('video_url');
             $table->string('thumbnail_url');
-            $table->integer('author_id');
+            $table->unsignedBigInteger('author_id'); 
             $table->string('author_name');
             $table->string('title');
-            $table->string('description');
-            $table->integer('likes');
-            $table->boolean('verified');
-            $table->boolean('pined');
+            $table->text('description');
+            $table->boolean('verified')->default(false);
+            $table->boolean('pined')->default(false);
             $table->string('video_author_name')->nullable();
-            $table->boolean('hidden');
-            $table->integer('verified_by')->nullable();
+            $table->boolean('hidden')->default(false);
+            $table->unsignedBigInteger('verified_by')->nullable(); 
             $table->timestamp('verified_at')->nullable();
             $table->string('verifier_username')->nullable();
             $table->timestamps();
         });
 
-        Schema::create('communitytubes_likes', function(Blueprint $table) {
-            $table->id();
-            $table->integer('video_id');
-            $table->integer('user_id');
+        Schema::create('communitytube_likes', function (Blueprint $table) {
+            $table->id(); 
+            $table->unsignedBigInteger('video_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('video_id')->references('id')->on('communitytube_videos')->cascadeOnDelete();
+            $table->unique(['video_id', 'user_id']);
         });
     }
 
     public function down(): void
     {
+        Schema::dropIfExists('communitytube_likes');
         Schema::dropIfExists('communitytube_videos');
     }
 };

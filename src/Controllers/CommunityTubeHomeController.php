@@ -42,12 +42,12 @@ class CommunityTubeHomeController extends Controller
     
         if(!$video) {
             return redirect()->route('communitytube.index')
-                             ->with('c_error', trans('communitytube::messages.no_video_found'));
+                             ->with('error', trans('communitytube::messages.no_video_found'));
         }
     
         if(!$video->verified && !$user->can('communitytube.manage')) {
             return redirect()->route('communitytube.index')
-                             ->with('c_error', trans('communitytube::messages.restricted_video'));
+                             ->with('error', trans('communitytube::messages.restricted_video'));
         }
 
         return view('communitytube::video', [
@@ -70,7 +70,7 @@ class CommunityTubeHomeController extends Controller
         $videoId = $matches[1] ?? null;
     
         if(!$videoId) {
-            return redirect()->back()->withc_errors(['link' => 'Le lien fourni n\'est pas une vidéo YouTube valide.']);
+            return redirect()->back()->with('error', trans('communitytube::messages.invalid_link'));
         }
 
         $user = Auth::user();
@@ -87,7 +87,6 @@ class CommunityTubeHomeController extends Controller
             'description' => $request->input('description'),
             'thumbnail_url' => $thumbnailUrl,
             'author_id' => $user->id,
-            'likes' => 0,
             'author_name' => $user->name,
             'hidden' => $request->has('add_as_hidden') && $request->boolean('add_as_hidden'),
             'verified' => $request->has('bypass_verification') && $request->boolean('bypass_verification'),
@@ -101,7 +100,7 @@ class CommunityTubeHomeController extends Controller
         ]);
 
         return redirect()->route('communitytube.index')
-            ->with('c_success', 'Vidéo soumise avec succès !');
+            ->with('success', trans('communitytube::messages.video_submitted_with_success'));
     }
     
 }

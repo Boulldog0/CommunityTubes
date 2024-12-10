@@ -4,6 +4,8 @@ return [
     'title' => 'Community Videos',
     'link-placeholder' => 'Only links type https://www.youtube.com/ or https://www.youtu.be/',
     'submitted_by' => 'Video submitted by',
+    'invalid_link' => 'Invalid link ! Only https://www.youtube.com/ or https://www.youtu.be/ links can be use !',
+    'video_submitted_with_success' => 'Video submitted with success !',
     'see_more' => 'See more',
     'video_title' => 'Details of the video',
     'no_video' => 'There are no videos available to show here. You can, if you have the permission, submit a new video !',
