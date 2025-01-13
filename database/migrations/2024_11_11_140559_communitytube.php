@@ -12,17 +12,15 @@ return new class extends Migration
             $table->id();
             $table->string('video_url');
             $table->string('thumbnail_url');
-            $table->unsignedBigInteger('author_id'); 
-            $table->string('author_name');
+            $table->unsignedBigInteger('submitter'); 
             $table->string('title');
             $table->text('description');
             $table->boolean('verified')->default(false);
             $table->boolean('pined')->default(false);
             $table->string('video_author_name')->nullable();
             $table->boolean('hidden')->default(false);
-            $table->unsignedBigInteger('verified_by')->nullable(); 
             $table->timestamp('verified_at')->nullable();
-            $table->string('verifier_username')->nullable();
+            $table->unsignedBigInteger('verifier')->nullable();
             $table->timestamps();
         });
 

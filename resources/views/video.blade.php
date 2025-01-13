@@ -39,7 +39,7 @@
                     @if($video->video_author_name)
                         <p class="card-text text-muted">{{ trans('communitytube::messages.designated_author')}} {{ $video->video_author_name }}</p>
                     @endif
-                    <p class="card-text text-muted">{{ trans('communitytube::messages.submitted_by')}} {{ $video->author_name }}</p>
+                    <p class="card-text text-muted">{{ trans('communitytube::messages.submitted_by')}} {{ \Azuriom\Models\User::find($video->submitter)?->name ?? trans('communitytube::messages.unknow_user')}}</p>
                     <p class="card-text text-muted">{{ trans('communitytube::messages.submitted_at')}} {{ $video->created_at->translatedFormat('d/m/Y H:i') }}</p>
                 </div>
                 <div class="card-footer d-flex justify-content-between">

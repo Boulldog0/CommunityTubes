@@ -31,8 +31,9 @@
                                 </div>
                                 <div class="col text-end">
                                     <h6 class="text-warning mb-1">⚠️ {{ trans('communitytube::messages.admin.video_waiting') }} ⚠️</h6>
-                                    <p class="text-muted mb-0">
-                                        {{ trans('communitytube::messages.admin.submiter') }} {{ $video->author_name }}
+                                    <p class="card-text text-muted mb-0">
+                                        {{ trans('communitytube::messages.submitted_by') }} 
+                                        {{ \Azuriom\Models\User::find($video->submitter)?->name ?? trans('communitytube::messages.unknow_user') }}
                                     </p>
                                 </div>
                                 <div class="col-auto">
@@ -65,8 +66,9 @@
                                     </p>
                                 </div>
                                 <div class="col text-end">
-                                    <p class="text-muted mb-0">
-                                        {{ trans('communitytube::messages.admin.submiter') }} {{ $video->author_name }}
+                                    <p class="card-text text-muted mb-0">
+                                        {{ trans('communitytube::messages.submitted_by') }} 
+                                        {{ \Azuriom\Models\User::find($video->submitter)?->name ?? trans('communitytube::messages.unknow_user') }}
                                     </p>
                                 </div>
                                 <div class="col-auto">

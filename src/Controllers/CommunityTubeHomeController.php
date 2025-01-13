@@ -6,6 +6,7 @@ use Azuriom\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Azuriom\Plugin\CommunityTube\Models\CommunityTube;
 use Illuminate\Http\Request;
+use Azuriom\Models\User;
 
 class CommunityTubeHomeController extends Controller
 {
@@ -63,6 +64,28 @@ class CommunityTubeHomeController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
         ]);
+
+        $user = Auth::user();
+
+        if(!$user) {
+            return redirect()->route('communitytube.index')
+                ->with('error', trans('communitytube::messages.must_be_login'));
+        }
+
+        if($request->has('bypass_verification') && !$user->can('communitytube.bypass_verification')) {
+            return redirect()->route('communitytube.index')
+                ->with('error', trans('communitytube::messages.no-permission'));
+        }
+
+        if($request->has('add_as_hidden') && !$user->can('communitytube.manage')) {
+            return redirect()->route('communitytube.index')
+                ->with('error', trans('communitytube::messages.no-permission'));
+        }
+
+        if($request->has('author') && !$user->can('communitytube.set_video_author')) {
+            return redirect()->route('communitytube.index')
+                ->with('error', trans('communitytube::messages.no-permission'));
+        }
     
         $link = $request->input('link');
 
@@ -73,27 +96,25 @@ class CommunityTubeHomeController extends Controller
             return redirect()->back()->with('error', trans('communitytube::messages.invalid_link'));
         }
 
-        $user = Auth::user();
-
         $thumbnailUrl = "https://img.youtube.com/vi/{$videoId}/maxresdefault.jpg";
     
         if(!@getimagesize($thumbnailUrl)) {
             $thumbnailUrl = "https://img.youtube.com/vi/{$videoId}/hqdefault.jpg";
         }
-    
+        
+        $description = $request->get('description') == null ? trans('communitytube::messages.default_description') : $request->get('description');
+
         CommunityTube::insert([
             'video_url' => $link,
             'title' => $request->input('title'),
-            'description' => $request->input('description'),
+            'description' => $description,
             'thumbnail_url' => $thumbnailUrl,
-            'author_id' => $user->id,
-            'author_name' => $user->name,
+            'submitter' => $user->id,
             'hidden' => $request->has('add_as_hidden') && $request->boolean('add_as_hidden'),
             'verified' => $request->has('bypass_verification') && $request->boolean('bypass_verification'),
-            'verified_by' => $request->boolean('bypass_verification') ? $user->id : null,
+            'verifier' => $request->boolean('bypass_verification') ? $user->id : null,
             'verified_at' => $request->boolean('bypass_verification') ? now() : null,
             'video_author_name' => $request->input('author'),
-            'verifier_username' => $request->boolean('bypass_verification') ? $user->name : null,
             'pined' => False,
             'created_at' => now(),
             'updated_at' => now(),

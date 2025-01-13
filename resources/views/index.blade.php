@@ -34,7 +34,10 @@
                                 <div class="card-body d-flex flex-column">
                                     <h5 class="card-title text-center">{{ $video->title }}</h5>
                                     <p class="card-text text-center text-truncate">{{ Str::limit($video->description, 100) }}</p>
-                                    <p class="card-text text-muted">{{ trans('communitytube::messages.submitted_by')}} {{ $video->author_name }}</p>
+                                    <p class="card-text text-muted">
+                                        {{ trans('communitytube::messages.submitted_by') }} 
+                                        {{ \Azuriom\Models\User::find($video->submitter)?->name ?? trans('communitytube::messages.unknow_user') }}
+                                    </p>
                                     <div class="mt-auto">
                                         <a href="{{ route('communitytube.video', ['id' => $video->id]) }}" class="btn btn-primary w-100">
                                             <i class="bi bi-eye"></i> {{ trans('communitytube::messages.see_more') }}

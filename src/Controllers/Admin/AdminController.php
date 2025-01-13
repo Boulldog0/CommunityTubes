@@ -5,6 +5,7 @@ namespace Azuriom\Plugin\CommunityTube\Controllers\Admin;
 use Azuriom\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Azuriom\Models\User;
 use Azuriom\Plugin\CommunityTube\Models\CommunityTube;
 
 class AdminController extends Controller
@@ -34,9 +35,8 @@ class AdminController extends Controller
 
         $video->update([
             'verified' => true,
-            'verified_by' => $user->id,
             'verified_at' => now(),
-            'verifier_username' => $user->name,
+            'verifier' => $user->id,
         ]);    
     
         return redirect()->route('communitytube.admin.edit', ['id' => $id])
@@ -77,9 +77,18 @@ class AdminController extends Controller
         $video = CommunityTube::find($id);
         $user = Auth::user();
 
+        $vname = null;
+        if($video->verifier !== null && $video->verifier > 0) {
+            $vuser = User::find($video->verifier);
+            if($vuser !== null) {
+                $vname = $vuser->name;
+            }
+        }
+
         return view('communitytube::admin.edit', [
             'video' => $video,
             'user' => $user,
+            'verifier_name' => $vname,
         ]);
     }
 
@@ -93,13 +102,20 @@ class AdminController extends Controller
         }
     
         $title = $request->input('title');
-        $description = $request->input('description');
+        $description = $request->get('description') == null ? trans('communitytube::messages.default_description') : $request->get('description');
         $video_url = $request->input('link');
         $pined = $request->boolean('pin'); 
         $hidden = $request->boolean('hide');
         $author = $request->input('author');
     
         $video = CommunityTube::find($id);
+
+        if($author && $author !== $video->video_author_name) {
+            if(!$user->can('communitytube.set_video_author')) {
+                return redirect()->route('communitytube.index')
+                    ->with('error', trans('communitytube::messages.no-permission'));
+            }
+        }
     
         $video->update([
             'title' => $title,

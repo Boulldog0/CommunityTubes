@@ -72,10 +72,10 @@
                     <label class="form-check-label" for="hideVideo">{{ trans('communitytube::messages.admin.hide_video') }}</label>
                 </div>
 
-                @if($video->verified)
+                @if($video->verified && $verifier_name !== null && $verifier_name > 0)
                     <div class="mb-3">
                         <label class="form-label" for="verified">{{ trans('communitytube::messages.admin.video_verified_by') }}</label>
-                        <input type="text" class="form-control" id="verified" name="verified" value="{{ $video->verifier_username}}" readonly>
+                        <input type="text" class="form-control" id="verified" name="verified" value="{{ $verifier_name }}" readonly>
                     </div>
                 @endif
 
